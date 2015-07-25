@@ -1,0 +1,164 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Sorting
+{
+    class SortClass
+    {       
+        delegate int HowFind(int[] arr);
+
+        public static void SortLinesKind(int[][] arr, int k)
+        {
+            IDirectable d;
+            IFind fi;
+            HowFind f;            
+            switch (k)
+            {
+                case 1:
+                    {
+                        d =new Ascending(); 
+                        fi = new FindSum();
+                    }
+                    break;
+                case 2:
+                    {
+                        d = new Descending();
+                        fi = new FindSum();
+                    }
+                    break;
+                case 3:
+                    {
+                        d = new Ascending();
+                        fi = new FindAbsMax();
+                    }
+                    break;
+                default:
+                    {
+                        d = new Descending();
+                        fi = new FindAbsMax();
+                    }
+                    break;
+            }            
+            f = fi.Find;
+            QuickSortKind(arr, 0,arr.Length-1, d,f);
+        }
+
+        static int Partition(int[][] numbers, int left, int right, IDirectable d, HowFind f)
+        {
+            int pivot = f(numbers[left]);
+            while (true)
+            {
+                d.Direction(numbers,ref left,ref right,pivot,f);
+                if (f(numbers[right]) == pivot && f(numbers[left]) == pivot)
+                {
+                    left++;
+                }
+                if (left < right)
+                {
+                    int[] temp = numbers[right];
+                    numbers[right] = numbers[left];
+                    numbers[left] = temp;
+                }
+                else
+                {
+                    return right;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// 1 - 2 - в порядке возрастания(убывания) максимальных по модулю элементов строк матрицы;
+        /// 3 - 4 - в порядке возрастания(убывания)  сумм элементов строк матрицы.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="kind"></param>
+        /// 
+        static void QuickSortKind(int[][] arr, int left, int right, IDirectable d, HowFind f)
+        {
+            if (left < right)
+            {
+                int pivot = Partition(arr, left, right,d,f);
+                if (pivot > 1)
+                    QuickSortKind(arr, left, pivot - 1,d,f);
+                if (pivot + 1 < right)
+                    QuickSortKind(arr, pivot + 1, right,d,f);
+            }
+        }        
+
+        private static int FindKind(int[] arr, int k)
+        {
+            IFind f;
+            if (k == 1 || k == 2)
+                f = new FindAbsMax();
+            else
+                f = new FindSum();
+            return f.Find(arr);
+        }        
+
+        private class FindAbsMax : IFind
+        {
+            int IFind.Find(int[] arr)
+            {
+                int max = Math.Abs(arr[0]), abse = 0;
+                for (int i = 1; i < arr.Length; i++)
+                {
+                    abse = Math.Abs(arr[i]);
+                    if (abse > max)
+                        max = abse;
+                }
+                return max;
+            }
+        }
+
+        class FindSum : IFind
+        {
+            int IFind.Find(int[] arr)
+            {
+                int sum = 0;
+                for (int i = 0; i < arr.Length; i++)
+                    sum += arr[i];
+                return sum;
+            }
+        }
+
+        interface IDirectable
+        {
+            void Direction(int[][] arr, ref int l, ref int r, int p, HowFind f);
+        }
+
+        interface IFind
+        {
+            int Find(int[] arr);
+        }
+
+        class Ascending : IDirectable
+        {
+
+            void IDirectable.Direction(int[][] arr,ref int l,ref int r, int p,HowFind f)
+            {
+                while (f(arr[l]) < p)
+                    l++;
+                while (f(arr[r]) > p)
+                    r--;
+            }
+        }
+
+        private class Descending : IDirectable
+        {
+
+            void IDirectable.Direction(int[][] arr, ref int l, ref int r, int p, HowFind f)
+            {
+                while (f(arr[l]) > p)
+                    l++;
+                while (f(arr[r]) < p)
+                    r--;
+            }
+        }
+
+
+    }
+}
