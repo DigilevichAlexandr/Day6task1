@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Sorting;
+
+namespace day4_task1
+{
+    class Program
+    {
+        static void Print(int[][] arr)
+        {
+            foreach (int[] line in arr)
+            {
+                int sum=0, max=0;
+                foreach (int a in line)
+                {
+                    sum += a;
+                    if (Math.Abs(a) >max)
+                        max = Math.Abs(a);
+                    Console.Write(a.ToString() + " ");
+                }                    
+                Console.WriteLine(" sum {0} max {1}",sum,max);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            int[][] myarr1 = { new int[] { 1, 5, 32, 7, 54, 12 }, new int[] { 4, 22, 9 }, new int[] { 1, 75, 67, 23, 4, 74, 45, 3, 7, 1 } };
+            Print(myarr1);
+            SortClass.SortLinesKind(myarr1, 1);
+            Console.WriteLine("сортировка по максимальным элементам по возрастанию");
+            Print(myarr1);
+            Console.WriteLine();
+            Console.WriteLine();
+
+            int[][] myarr2 = { new int[] { 1, 5, 32, 7, 54, 12 }, new int[] { 4, 22, 9 }, new int[] { 1, 75, 67, 23, 4, 74, 45, 3, 7, 1 } };
+            Print(myarr2);
+            SortClass.SortLinesKind(myarr2, 2);
+            Console.WriteLine("сортировка по максимальным элементам по убыванию");
+            Print(myarr2);
+            Console.WriteLine();
+            Console.WriteLine();
+
+            int[][] myarr3 = { new int[] { 1, 5, 32, 7, 54, 12 }, new int[] { 4, 22, 9 }, new int[] { 1, 75, 67, 23, 4, 74, 45, 3, 7, 1 } };
+            Print(myarr3);
+            SortClass.SortLinesKind(myarr3, 3);
+            Console.WriteLine("сортировка по суммам элементам по возрастанию");
+            Print(myarr3);
+            Console.WriteLine();
+            Console.WriteLine();
+
+            int[][] myarr4 = { new int[] { 1, 5, 32, 7, 54, 12 }, new int[] { 4, 22, 9 }, new int[] { 1, 75, 67, 23, 4, 74, 45, 3, 7, 1 } };
+            Print(myarr4);
+            SortClass.SortLinesKind(myarr4, 4);
+            Console.WriteLine("сортировка по суммам элементам по убыванию");
+            Print(myarr4);
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Console.ReadLine();
+        }
+    }
+}
