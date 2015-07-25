@@ -59,6 +59,22 @@ namespace day4_task1
             Console.WriteLine();
             Console.WriteLine();
 
+            int[][] myarr5 = { new int[] { 1, 5, 32, 7, 54, 12 }, new int[] { 4, 22, 9 }, new int[] { 1, 75, 67, 23, 4, 74, 45, 3, 7, 1 } };
+            Print(myarr5);
+            SortClass.SortLinesKind(myarr5, 5);
+            Console.WriteLine("сортировка по подлинам по возрастанию");
+            Print(myarr5);
+            Console.WriteLine();
+            Console.WriteLine();
+
+            int[][] myarr6 = { new int[] { 1, 5, 32, 7, 54, 12 }, new int[] { 4, 22, 9 }, new int[] { 1, 75, 67, 23, 4, 74, 45, 3, 7, 1 } };
+            Print(myarr6);
+            SortClass.SortLinesKind(myarr6, 6);
+            Console.WriteLine("сортировка подлинам по убыванию");
+            Print(myarr6);
+            Console.WriteLine();
+            Console.WriteLine();
+
             Console.ReadLine();
         }
     }
