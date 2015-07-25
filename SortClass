@@ -13,36 +13,20 @@ namespace Sorting
         public static void SortLinesKind(int[][] arr, int k)
         {
             IDirectable d;
-            IFind fi;
-            HowFind f;            
-            switch (k)
-            {
-                case 1:
-                    {
-                        d =new Ascending(); 
-                        fi = new FindSum();
-                    }
-                    break;
-                case 2:
-                    {
-                        d = new Descending();
-                        fi = new FindSum();
-                    }
-                    break;
-                case 3:
-                    {
-                        d = new Ascending();
-                        fi = new FindAbsMax();
-                    }
-                    break;
-                default:
-                    {
-                        d = new Descending();
-                        fi = new FindAbsMax();
-                    }
-                    break;
-            }            
-            f = fi.Find;
+            IFind fi=null;
+            HowFind f = null;     
+            if (k % 2==0)
+                d = new Ascending();
+            else
+                d = new Descending();
+            if (k == 1 || k == 2)
+                fi = new FindSum();
+            else
+                if (k == 3 || k == 4)
+                    fi = new FindAbsMax();
+                else
+                    f = (int[] array) => array.Length;
+            f = f ?? fi.Find;
             QuickSortKind(arr, 0,arr.Length-1, d,f);
         }
 
@@ -158,7 +142,6 @@ namespace Sorting
                     r--;
             }
         }
-
 
     }
 }
